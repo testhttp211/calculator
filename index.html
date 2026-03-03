@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Proffesional</title>
+    <title>Kalkulator Cuan Nasrullah</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,6 +18,7 @@
             margin: 0;
             display: flex;
             justify-content: center;
+            color: var(--text-main);
         }
         .container { 
             background: white; 
@@ -28,23 +29,130 @@
             max-width: 420px; 
         }
         .header { text-align: center; margin-bottom: 25px; }
-        .header h2 { color: var(--shopee-orange); margin: 0; font-size: 1.4rem; }
-        .header p { color: #888; font-size: 0.8rem; margin-top: 5px; }
-        
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main); font-size: 0.9rem; }
-        .input-group { position: relative; margin-bottom: 20px; }
-        .input-group span { position: absolute; left: 15px; top: 12px; color: #aaa; font-weight: 600; }
-        input { 
+        .header h2 { color: var(--shopee-orange); margin: 0; font-size: 1.4rem; font-weight: 600; }
+        .header p { color: #888; font-size: 0.85rem; margin-top: 5px; }
+
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+        input[type="number"] { 
             width: 100%; 
-            padding: 12px 12px 12px 45px; 
-            border: 2px solid #edf2f7; 
+            padding: 12px 15px; 
+            border: 2px solid #eee; 
             border-radius: 12px; 
+            font-size: 1rem; 
             box-sizing: border-box; 
-            font-size: 1.1rem; 
-            transition: all 0.3s;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+        input[type="number"]:focus { border-color: var(--shopee-orange); }
+
+        .radio-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+            margin-bottom: 25px; 
+        }
+        .radio-option {
+            background: #fff;
+            border: 2px solid #eee;
+            padding: 10px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
             font-weight: 600;
         }
-        input:focus { border-color: var(--shopee-orange); outline: none; box-shadow: 0 0 0 4px rgba(238, 77, 45, 0.05); }
+        .radio-option:has(input:checked) {
+            border-color: var(--shopee-orange);
+            background: rgba(238, 77, 45, 0.05);
+            color: var(--shopee-orange);
+        }
+        .radio-option input { display: none; }
+
+        .result-card { 
+            background: #fffcfb; 
+            border: 1px dashed var(--shopee-orange); 
+            padding: 18px; 
+            border-radius: 16px; 
+        }
+        .main-price { font-size: 1.5rem; font-weight: 600; color: var(--shopee-orange); margin: 5px 0 15px 0; }
+        .details { font-size: 0.85rem; color: #666; }
+        .details-item { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .details-item span:last-child { color: var(--text-main); font-weight: 600; }
+        hr { border: none; border-top: 1px solid #eee; margin: 15px 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Kalkulator Cuan</h2>
+        <p>Solusi Estetik - Shopee Dropship</p>
+    </div>
+    
+    <div class="input-group">
+        <label>Harga Modal Jakmall</label>
+        <input type="number" id="modal" placeholder="Masukkan harga modal..." oninput="hitung()">
+    </div>
+
+    <label>Target Margin Keuntungan</label>
+    <div class="radio-grid">
+        <label class="radio-option"><input type="radio" name="margin" value="0.10" checked onclick="hitung()"> 10%</label>
+        <label class="radio-option"><input type="radio" name="margin" value="0.15" onclick="hitung()"> 15%</label>
+        <label class="radio-option"><input type="radio" name="margin" value="0.20" onclick="hitung()"> 20%</label>
+        <label class="radio-option"><input type="radio" name="margin" value="0.05" onclick="hitung()"> 5%</label>
+    </div>
+
+    <div class="result-card">
+        <label style="color: #888; font-size: 0.8rem; margin-bottom: 0;">Harga Jual Rekomendasi</label>
+        <div class="main-price" id="hargaJual">Rp 0</div>
+        
+        <div class="details">
+            <div class="details-item">
+                <span>Budget Iklan (10%)</span>
+                <span id="budgetIklan">Rp 0</span>
+            </div>
+            <div class="details-item">
+                <span>Potongan Admin (9.5%)</span>
+                <span id="potonganAdmin">Rp 0</span>
+            </div>
+            <div class="details-item">
+                <span>Biaya Penanganan</span>
+                <span>Rp 1.250</span>
+            </div>
+            <div class="details-item">
+                <span>Biaya Mitra Jakmall</span>
+                <span>Rp 2.200</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function hitung() {
+        const modal = parseFloat(document.getElementById('modal').value) || 0;
+        const marginPersen = parseFloat(document.querySelector('input[name="margin"]:checked').value);
+        
+        // Iklan 10% (0.10) + Admin 9.5% (0.095) = 0.195
+        const biayaTetap = 1250 + 2200;
+        const totalPotonganPersen = marginPersen + 0.10 + 0.095;
+        
+        const hargaJual = (modal + biayaTetap) / (1 - totalPotonganPersen);
+        
+        if (modal > 0) {
+            document.getElementById('hargaJual').innerText = "Rp " + Math.round(hargaJual).toLocaleString('id-ID');
+            document.getElementById('budgetIklan').innerText = "Rp " + Math.round(hargaJual * 0.10).toLocaleString('id-ID');
+            document.getElementById('potonganAdmin').innerText = "Rp " + Math.round(hargaJual * 0.095).toLocaleString('id-ID');
+        } else {
+            document.getElementById('hargaJual').innerText = "Rp 0";
+            document.getElementById('budgetIklan').innerText = "Rp 0";
+            document.getElementById('potonganAdmin').innerText = "Rp 0";
+        }
+    }
+</script>
+
+</body>
+</html>
 
         /* Style untuk selector margin */
         .margin-options {
