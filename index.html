@@ -1,30 +1,186 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Profit Calculator</title>
+    <title>Kalkulator Proffesional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --shopee-orange: #ee4d2d;
+            --bg-color: #f7f9fc;
+            --text-main: #2c3e50;
+        }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: var(--bg-color); 
+            padding: 20px; 
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 24px; 
+            box-shadow: 0 10px 30px rgba(238, 77, 45, 0.1); 
+            width: 100%;
+            max-width: 420px; 
+        }
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h2 { color: var(--shopee-orange); margin: 0; font-size: 1.4rem; }
+        .header p { color: #888; font-size: 0.8rem; margin-top: 5px; }
+        
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main); font-size: 0.9rem; }
+        .input-group { position: relative; margin-bottom: 20px; }
+        .input-group span { position: absolute; left: 15px; top: 12px; color: #aaa; font-weight: 600; }
+        input { 
+            width: 100%; 
+            padding: 12px 12px 12px 45px; 
+            border: 2px solid #edf2f7; 
+            border-radius: 12px; 
+            box-sizing: border-box; 
+            font-size: 1.1rem; 
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        input:focus { border-color: var(--shopee-orange); outline: none; box-shadow: 0 0 0 4px rgba(238, 77, 45, 0.05); }
+
+        /* Style untuk selector margin */
+        .margin-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .margin-btn {
+            flex: 1;
+            position: relative;
+        }
+        .margin-btn input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .margin-btn label {
+            display: block;
+            text-align: center;
+            background: #f1f3f5;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+            margin-bottom: 0;
+        }
+        .margin-btn input:checked + label {
+            background: #fff0ed;
+            border-color: var(--shopee-orange);
+            color: var(--shopee-orange);
+        }
+
+        .result-card { 
+            background: linear-gradient(135deg, #ee4d2d 0%, #ff7337 100%); 
+            padding: 20px; 
+            border-radius: 18px; 
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .result-card .label { font-size: 0.85rem; opacity: 0.9; }
+        .result-card .price { font-size: 1.8rem; font-weight: bold; margin: 5px 0; display: block; }
+
+        .breakdown { background: #fff; border: 1px dashed #ddd; padding: 15px; border-radius: 12px; }
+        .item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; color: #555; }
+        .item .val { font-weight: 600; color: var(--text-main); }
+        .profit-info { color: #27ae60; font-weight: bold; border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px; font-size: 1rem; }
+
+        .tag { font-size: 0.7rem; background: #fff0ed; color: #ee4d2d; padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; font-weight: 600; }
+    </style>
 </head>
 <body>
-    <h1>Business Profit Calculator</h1>
-    <form id="profitCalc">
-        <label for="revenue">Total Revenue:</label>
-        <input type="number" id="revenue" name="revenue" required>
-        <br>
-        <label for="cost">Total Cost:</label>
-        <input type="number" id="cost" name="cost" required>
-        <br>
-        <button type="button" onclick="calculateProfit()">Calculate Profit</button>
-    </form>
-    <h2 id="result"></h2>
 
-    <script>
-        function calculateProfit() {
-            const revenue = parseFloat(document.getElementById('revenue').value);
-            const cost = parseFloat(document.getElementById('cost').value);
-            const profit = revenue - cost;
-            document.getElementById('result').innerText = `Profit: $${profit.toFixed(2)}`;
-        }
-    </script>
+<div class="container">
+    <div class="header">
+        <div class="tag">VERSI NO-PO (READY STOK)</div>
+        <h2>Cek Harga Jual</h2>
+        <p>Pasti Bisa Sukses 🚀</p>
+    </div>
+    
+    <label>Harga Barang di Jakmall</label>
+    <div class="input-group">
+        <span>Rp</span>
+        <input type="number" id="hargaJakmall" placeholder="0" oninput="hitung()">
+    </div>
+
+    <label>Target Margin Untung</label>
+    <div class="margin-options">
+        <div class="margin-btn">
+            <input type="radio" id="m10" name="margin" value="0.10" checked onchange="hitung()">
+            <label for="m10">10%</label>
+        </div>
+        <div class="margin-btn">
+            <input type="radio" id="m15" name="margin" value="0.15" onchange="hitung()">
+            <label for="m15">15%</label>
+        </div>
+        <div class="margin-btn">
+            <input type="radio" id="m20" name="margin" value="0.20" onchange="hitung()">
+            <label for="m20">20%</label>
+        </div>
+    </div>
+
+    <div class="result-card">
+        <span class="label">Rekomendasi Harga Jual</span>
+        <span class="price" id="hargaJual">Rp 0</span>
+    </div>
+
+    <div class="breakdown">
+        <div class="item"><span>Budget Iklan (10%)</span> <span class="val" id="valIklan">Rp 0</span></div>
+        <div class="item"><span>Potongan Admin (9.5%)</span> <span class="val" id="valAdmin">Rp 0</span></div>
+        <div class="item"><span>Biaya Penanganan</span> <span class="val">Rp 1.250</span></div>
+        <div class="item"><span>Biaya Mitra Jakmall</span> <span class="val">Rp 2.200</span></div>
+        <div class="profit-info">
+            <div class="item" style="margin:0"><span>Untung Bersih (<span id="labelMargin">10</span>%)</span> <span class="val" style="color:#27ae60" id="valUntung">Rp 0</span></div>
+        </div>
+    </div>
+</div>
+
+<script>
+function hitung() {
+    let cost = parseFloat(document.getElementById('hargaJakmall').value) || 0;
+    
+    // Ambil nilai margin yang dipilih
+    let selectedMargin = parseFloat(document.querySelector('input[name="margin"]:checked').value);
+    
+    if (cost > 0) {
+        // Update label margin di breakdown
+        document.getElementById('labelMargin').innerText = selectedMargin * 100;
+
+        // Rumus Harga Jual (P)
+        // Fixed: Cost + Mitra 2200 + Fee Shopee 1250
+        // Variable: Admin 9.5% + Iklan 10% + Profit (Pilihan)
+        let fixedCosts = cost + 2200 + 1250;
+        let adminRate = 0.095;
+        let iklanRate = 0.10;
+        let variableRate = adminRate + iklanRate + selectedMargin; 
+        
+        let p = fixedCosts / (1 - variableRate);
+        
+        let admin = p * adminRate;
+        let iklan = p * iklanRate;
+        let untung = p * selectedMargin;
+
+        document.getElementById('hargaJual').innerText = "Rp " + Math.round(p).toLocaleString('id-ID');
+        document.getElementById('valAdmin').innerText = "Rp " + Math.round(admin).toLocaleString('id-ID');
+        document.getElementById('valIklan').innerText = "Rp " + Math.round(iklan).toLocaleString('id-ID');
+        document.getElementById('valUntung').innerText = "Rp " + Math.round(untung).toLocaleString('id-ID');
+    } else {
+        document.getElementById('hargaJual').innerText = "Rp 0";
+        document.getElementById('valAdmin').innerText = "Rp 0";
+        document.getElementById('valIklan').innerText = "Rp 0";
+        document.getElementById('valUntung').innerText = "Rp 0";
+    }
+}
+</script>
+
 </body>
 </html>
