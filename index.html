@@ -12,6 +12,7 @@
             --text-main: #2c3e50;
             --profit-green: #27ae60;
         }
+
         body { 
             font-family: 'Poppins', sans-serif; 
             background: var(--bg-color); 
@@ -21,6 +22,7 @@
             justify-content: center;
             color: var(--text-main);
         }
+
         .container { 
             background: white; 
             padding: 25px; 
@@ -29,12 +31,36 @@
             width: 100%;
             max-width: 420px; 
         }
-        .header { text-align: center; margin-bottom: 25px; }
-        .header h2 { color: var(--shopee-orange); margin: 0; font-size: 1.4rem; font-weight: 600; }
-        .header p { color: #888; font-size: 0.85rem; margin-top: 5px; }
 
-        .input-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+        .header { 
+            text-align: center; 
+            margin-bottom: 25px; 
+        }
+
+        .header h2 { 
+            color: var(--shopee-orange); 
+            margin: 0; 
+            font-size: 1.4rem; 
+            font-weight: 600; 
+        }
+
+        .header p { 
+            color: #888; 
+            font-size: 0.85rem; 
+            margin-top: 5px; 
+        }
+
+        .input-group { 
+            margin-bottom: 20px; 
+        }
+
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+        }
+
         input[type="number"] { 
             width: 100%; 
             padding: 12px 15px; 
@@ -44,7 +70,10 @@
             box-sizing: border-box; 
             outline: none;
         }
-        input[type="number"]:focus { border-color: var(--shopee-orange); }
+
+        input[type="number"]:focus { 
+            border-color: var(--shopee-orange); 
+        }
 
         .radio-grid { 
             display: grid; 
@@ -52,6 +81,7 @@
             gap: 10px; 
             margin-bottom: 25px; 
         }
+
         .radio-option {
             background: #fff;
             border: 2px solid #eee;
@@ -61,12 +91,16 @@
             cursor: pointer;
             font-weight: 600;
         }
+
         .radio-option:has(input:checked) {
             border-color: var(--shopee-orange);
             background: rgba(238, 77, 45, 0.05);
             color: var(--shopee-orange);
         }
-        .radio-option input { display: none; }
+
+        .radio-option input { 
+            display: none; 
+        }
 
         .result-card { 
             background: #fffcfb; 
@@ -74,12 +108,30 @@
             padding: 18px; 
             border-radius: 16px; 
         }
-        .main-price { font-size: 1.5rem; font-weight: 600; color: var(--shopee-orange); margin: 5px 0 15px 0; }
-        
-        .details { font-size: 0.85rem; color: #666; }
-        .details-item { display: flex; justify-content: space-between; margin-bottom: 8px; }
-        .details-item span:last-child { color: var(--text-main); font-weight: 600; }
-        
+
+        .main-price { 
+            font-size: 1.5rem; 
+            font-weight: 600; 
+            color: var(--shopee-orange); 
+            margin: 5px 0 15px 0; 
+        }
+
+        .details { 
+            font-size: 0.85rem; 
+            color: #666; 
+        }
+
+        .details-item { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 8px; 
+        }
+
+        .details-item span:last-child { 
+            color: var(--text-main); 
+            font-weight: 600; 
+        }
+
         .total-profit {
             margin-top: 15px;
             padding-top: 15px;
@@ -102,85 +154,146 @@
     </div>
     
     <div class="input-group">
-        <label>Harga Barang</label>
+        <label>Harga Modal Produk</label>
         <input type="number" id="modal" placeholder="Masukkan harga modal..." oninput="hitung()">
     </div>
 
+    <div class="input-group">
+        <label>Biaya Ongkir</label>
+        <input type="number" id="ongkir" placeholder="Masukkan biaya ongkir..." value="0" oninput="hitung()">
+    </div>
+
     <label>Target Margin Keuntungan</label>
+
     <div class="radio-grid">
-        <label class="radio-option"><input type="radio" name="margin" value="0.10" checked onclick="hitung()"> 10%</label>
-        <label class="radio-option"><input type="radio" name="margin" value="0.15" onclick="hitung()"> 15%</label>
-        <label class="radio-option"><input type="radio" name="margin" value="0.20" onclick="hitung()"> 20%</label>
-        <label class="radio-option"><input type="radio" name="margin" value="0.05" onclick="hitung()"> 5%</label>
+        <label class="radio-option">
+            <input type="radio" name="margin" value="0.10" checked onclick="hitung()"> 10%
+        </label>
+
+        <label class="radio-option">
+            <input type="radio" name="margin" value="0.15" onclick="hitung()"> 15%
+        </label>
+
+        <label class="radio-option">
+            <input type="radio" name="margin" value="0.20" onclick="hitung()"> 20%
+        </label>
+
+        <label class="radio-option">
+            <input type="radio" name="margin" value="0.05" onclick="hitung()"> 5%
+        </label>
     </div>
 
     <div class="result-card">
-        <label style="color: #888; font-size: 0.8rem; margin-bottom: 0;">Harga Jual Rekomendasi</label>
+
+        <label style="color: #888; font-size: 0.8rem; margin-bottom: 0;">
+            Harga Jual Rekomendasi
+        </label>
+
         <div class="main-price" id="hargaJual">Rp 0</div>
         
         <div class="details">
+
             <div class="details-item">
                 <span>Budget Iklan (10%)</span>
                 <span id="budgetIklan">- Rp 0</span>
             </div>
+
             <div class="details-item">
                 <span>Potongan Admin (9.5%)</span>
                 <span id="potonganAdmin">- Rp 0</span>
             </div>
+
             <div class="details-item">
                 <span>Biaya Penanganan</span>
                 <span>- Rp 1.250</span>
             </div>
+
             <div class="details-item">
-                <span>Biaya Mitra Jakmall</span>
-                <span>- Rp 2.200</span>
+                <span>Biaya Ongkir</span>
+                <span id="biayaOngkir">- Rp 0</span>
             </div>
+
             <div class="details-item">
                 <span>Harga Modal Produk</span>
                 <span id="modalDetail">- Rp 0</span>
             </div>
+
         </div>
 
         <div class="total-profit">
             <span>Untung Bersih</span>
             <span id="untungBersih">Rp 0</span>
         </div>
+
     </div>
 </div>
 
 <script>
-    function hitung() {
-        const modal = parseFloat(document.getElementById('modal').value) || 0;
-        const marginPersen = parseFloat(document.querySelector('input[name="margin"]:checked').value);
-        
-        const bPenanganan = 1250;
-        const bMitra = 2200;
-        const totalPotonganPersen = marginPersen + 0.10 + 0.095;
-        
-        // Rumus Harga Jual Dasar
-        const hargaJual = (modal + bPenanganan + bMitra) / (1 - totalPotonganPersen);
-        
-        if (modal > 0) {
-            const hJualBulat = Math.round(hargaJual);
-            const vIklan = Math.round(hJualBulat * 0.10);
-            const vAdmin = Math.round(hJualBulat * 0.095);
-            
-            // Logika: Harga Jual - Semua Biaya - Modal
-            const untung = hJualBulat - vIklan - vAdmin - bPenanganan - bMitra - modal;
 
-            document.getElementById('hargaJual').innerText = "Rp " + hJualBulat.toLocaleString('id-ID');
-            document.getElementById('budgetIklan').innerText = "- Rp " + vIklan.toLocaleString('id-ID');
-            document.getElementById('potonganAdmin').innerText = "- Rp " + vAdmin.toLocaleString('id-ID');
-            document.getElementById('modalDetail').innerText = "- Rp " + modal.toLocaleString('id-ID');
-            document.getElementById('untungBersih').innerText = "Rp " + Math.round(untung).toLocaleString('id-ID');
-        } else {
-            document.getElementById('hargaJual').innerText = "Rp 0";
-            document.getElementById('budgetIklan').innerText = "- Rp 0";
-            document.getElementById('potonganAdmin').innerText = "- Rp 0";
-            document.getElementById('modalDetail').innerText = "- Rp 0";
-            document.getElementById('untungBersih').innerText = "Rp 0";
-        }
+function hitung() {
+
+    const modal = parseFloat(document.getElementById('modal').value) || 0;
+    const ongkir = parseFloat(document.getElementById('ongkir').value) || 0;
+    const marginPersen = parseFloat(
+        document.querySelector('input[name="margin"]:checked').value
+    );
+
+    const bPenanganan = 1250;
+
+    const totalPotonganPersen =
+        marginPersen + 0.10 + 0.095;
+
+    // Harga jual dihitung dari total biaya + margin
+    const hargaJual =
+        (modal + bPenanganan + ongkir) /
+        (1 - totalPotonganPersen);
+
+    if (modal > 0) {
+
+        const hJualBulat = Math.round(hargaJual);
+
+        const vIklan = Math.round(hJualBulat * 0.10);
+
+        const vAdmin = Math.round(hJualBulat * 0.095);
+
+        const untung =
+            hJualBulat -
+            vIklan -
+            vAdmin -
+            bPenanganan -
+            ongkir -
+            modal;
+
+        document.getElementById('hargaJual').innerText =
+            "Rp " + hJualBulat.toLocaleString('id-ID');
+
+        document.getElementById('budgetIklan').innerText =
+            "- Rp " + vIklan.toLocaleString('id-ID');
+
+        document.getElementById('potonganAdmin').innerText =
+            "- Rp " + vAdmin.toLocaleString('id-ID');
+
+        document.getElementById('biayaOngkir').innerText =
+            "- Rp " + ongkir.toLocaleString('id-ID');
+
+        document.getElementById('modalDetail').innerText =
+            "- Rp " + modal.toLocaleString('id-ID');
+
+        document.getElementById('untungBersih').innerText =
+            "Rp " + Math.round(untung).toLocaleString('id-ID');
+
+    } else {
+
+        document.getElementById('hargaJual').innerText = "Rp 0";
+        document.getElementById('budgetIklan').innerText = "- Rp 0";
+        document.getElementById('potonganAdmin').innerText = "- Rp 0";
+        document.getElementById('biayaOngkir').innerText = "- Rp 0";
+        document.getElementById('modalDetail').innerText = "- Rp 0";
+        document.getElementById('untungBersih').innerText = "Rp 0";
+
     }
+}
+
 </script>
 
 </body>
